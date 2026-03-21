@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>趣味惩罚游戏 | 主页</title>
+    <!-- 修复：使用官方CDN最新版，确保PC端加载稳定 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // 修复：确保Tailwind配置正确生效（PC端需显式配置）
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B6B', // 主粉色
+                        secondary: '#FFA0A0', // 浅粉色
+                        accent: '#FFD166',
+                        dark: '#292F36',
+                        light: '#FFF9FA' // 浅粉背景色
+                    },
+                    fontFamily: {
+                        comic: ['"Comic Sans MS"', '"Bubblegum Sans"', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .card-hover {
+                transition: transform 0.3s, box-shadow 0.3s;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(255,107,107,0.2);
+            }
+            .random-img {
+                object-fit: cover;
+                border-radius: 8px;
+                width: 100%;
+                height: 120px;
+            }
+            .text-shadow-pink {
+                text-shadow: 2px 2px 4px rgba(255,107,107,0.4);
+            }
+        }
+    </style>
+    <!-- 修复：添加PC端基础样式兼容，防止Tailwind加载失败降级 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #FFF9FA !important; /* 强制浅粉背景，兼容Tailwind失效 */
+            font-family: 'Comic Sans MS', 'Bubblegum Sans', cursive;
+            color: #292F36;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* 确保网格在PC端正常显示 */
+        #cardContainer {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+            gap: 16px !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部：粉色渐变，强制样式优先级 -->
+    <header style="background: linear-gradient(to right, #FF6B6B, #FFA0A0) !important; padding: 2rem 0; box-shadow: 0 4px 12px rgba(255,107,107,0.2);">
+        <div class="container text-center">
+            <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: bold; color: white !important; text-shadow: 2px 2px 4px rgba(255,107,107,0.4); margin-bottom: 0.5rem;">趣味惩罚游戏</h1>
+            <p style="font-size: clamp(1rem, 2vw, 1.2rem); color: white; opacity: 0.9; margin: 0;">点击任意卡片随机抽取惩罚</p>
+        </div>
+    </header>
+
+    <main style="padding: 2rem 0;">
+        <section class="container">
+            <!-- 5×6随机不重复图片卡片网格 -->
+            <div id="cardContainer" class="grid gap-4">
+                <!-- 卡片将通过JS动态生成 -->
+            </div>
+        </section>
+    </main>
+
+    <footer style="background-color: #292F36 !important; color: white; padding: 1rem 0; text-align: center; font-size: 0.875rem;">
+        <div class="container">
+            <p>趣味惩罚游戏 &copy; 2024</p>
+        </div>
+    </footer>
+
+    <script>
+        // 核心逻辑：生成30个不重复的随机图片卡片
+        const cardContainer = document.getElementById('cardContainer');
+        const totalCards = 30;
+
+        // 生成不重复的随机数数组（用于图片种子）
+        function generateUniqueRandoms(count, max) {
+            const randoms = new Set();
+            while (randoms.size < count) {
+                randoms.add(Math.floor(Math.random() * max) + 1); // 1-1000的随机数，确保不重复
+            }
+            return Array.from(randoms);
+        }
+
+        // 生成30个不重复的随机种子
+        const uniqueSeeds = generateUniqueRandoms(totalCards, 1000);
+
+        // 动态创建卡片（添加内联样式兼容，防止Tailwind失效）
+        for (let i = 0; i < totalCards; i++) {
+            const cardId = i + 1;
+            const seed = uniqueSeeds[i];
+            const card = document.createElement('div');
+            // 内联样式+Tailwind类，双重保障PC端显示
+            card.style = `
+                background: white;
+                border-radius: 12px;
+                padding: 16px;
+                text-align: center;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                transition: transform 0.3s, box-shadow 0.3s;
+            `;
+            card.className = 'card-hover'; // 保留Tailwind hover动效
+            card.innerHTML = `
+                <div class="random-card relative" data-id="${cardId}" style="cursor: pointer;">
+                    <img src="https://picsum.photos/seed/${seed}/400/200" alt="随机图片${cardId}" class="random-img" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px;">
+                    <div style="margin-top: 8px; font-weight: bold; color: #FF6B6B; font-size: 1rem;">惩罚 #${cardId}</div>
+                </div>
+            `;
+            cardContainer.appendChild(card);
+        }
+
+        // 卡片交互逻辑
+        const cards = document.querySelectorAll('.random-card');
+        let longPressTimer = null;
+
+        cards.forEach(card => {
+            // 点击事件：随机抽取惩罚
+            card.addEventListener('click', () => {
+                if (longPressTimer) {
+                    clearTimeout(longPressTimer);
+                    longPressTimer = null;
+                    return;
+                }
+                const randomId = Math.floor(Math.random() * totalCards) + 1;
+                window.location.href = `punishments/punishment${randomId}.html`;
+            });
+
+            // 长按事件：进入对应号数惩罚
+            card.addEventListener('mousedown', () => {
+                longPressTimer = setTimeout(() => {
+                    const id = card.getAttribute('data-id');
+                    window.location.href = `punishments/punishment${id}.html`;
+                    longPressTimer = null;
+                }, 800);
+            });
+
+            // 取消长按（电脑端）
+            card.addEventListener('mouseup', () => {
+                if (longPressTimer) {
+                    clearTimeout(longPressTimer);
+                    longPressTimer = null;
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                if (longPressTimer) {
+                    clearTimeout(longPressTimer);
+                    longPressTimer = null;
+                }
+            });
+
+            // 移动端触摸事件
+            card.addEventListener('touchstart', () => {
+                longPressTimer = setTimeout(() => {
+                    const id = card.getAttribute('data-id');
+                    window.location.href = `punishments/punishment${id}.html`;
+                    longPressTimer = null;
+                }, 800);
+            });
+            card.addEventListener('touchend', () => {
+                if (longPressTimer) {
+                    clearTimeout(longPressTimer);
+                    longPressTimer = null;
+                }
+            });
+            card.addEventListener('touchcancel', () => {
+                if (longPressTimer) {
+                    clearTimeout(longPressTimer);
+                    longPressTimer = null;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
