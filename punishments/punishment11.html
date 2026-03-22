@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>惩罚项目11 - 我是呱呱 | 趣味惩罚游戏</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B6B',
+                        secondary: '#4ECDC4',
+                        accent: '#FFD166',
+                        dark: '#292F36',
+                        light: '#F7FFF7'
+                    },
+                    fontFamily: {
+                        comic: ['"Comic Sans MS"', '"Bubblegum Sans"', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .bg-gradient-custom {
+                background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            }
+        }
+    </style>
+</head>
+<body class="bg-light font-comic text-dark min-h-screen">
+    <header class="bg-gradient-custom text-white py-6 shadow-lg">
+        <div class="container mx-auto px-4">
+            <a href="../index.html" class="text-white hover:text-accent transition-colors inline-block">
+                <span class="text-xl font-bold">← 返回主页</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="max-w-3xl mx-auto">
+            <div class="bg-white rounded-xl shadow-xl p-8 mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <span class="bg-primary/20 text-primary font-bold text-xl py-2 px-6 rounded-full">惩罚项目 #11</span>
+                    <span class="text-gray-500 text-sm">难度：★★★☆☆</span>
+                </div>
+                
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-primary mb-6 text-center">我是呱呱</h2>
+                
+                <div class="bg-accent/10 rounded-lg p-6 mb-6">
+                    <p class="text-[clamp(1.2rem,2vw,1.5rem)] text-dark font-medium text-center leading-relaxed">
+                        我是呱呱：围绕教室学青蛙跳并呱呱叫
+                    </p>
+                </div>
+                
+                <div class="bg-gray-100 rounded-lg p-6 text-center mb-8">
+                    <img src="../images/db51070e820ed193e17037ec1c0ae9d3.png" alt="小跳蛙参考" class="mx-auto max-h-64 object-contain rounded-lg shadow-md">
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-primary/5 rounded-lg p-4">
+                        <h3 class="font-bold text-primary mb-2">执行要求</h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>模仿青蛙跳跃动作，围绕教室完整跳一圈</li>
+                            <li>跳跃过程中持续发出“呱呱”的青蛙叫声</li>
+                            <li>动作幅度统一，叫声清晰有节奏</li>
+                            <li>全程无停顿，完成完整一圈跳跃</li>
+                        </ul>
+                    </div>
+                    <div class="bg-secondary/5 rounded-lg p-4">
+                        <h3 class="font-bold text-secondary mb-2">温馨提示</h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>提前活动腿部关节，避免跳跃时扭伤</li>
+                            <li>跳跃幅度适中，防止摔倒或碰撞桌椅</li>
+                            <li>叫声无需过大，保持清晰即可</li>
+                            <li>若体力不支，可适当放慢跳跃速度</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="../index.html" class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-lg transition-colors text-lg">
+                        返回主页
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white py-4 mt-8">
+        <div class="container mx-auto px-4 text-center text-sm">
+            <p>趣味惩罚游戏 &copy; 2024</p>
+        </div>
+    </footer>
+</body>
+</html>

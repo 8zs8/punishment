@@ -1,0 +1,908 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>惩罚项目30 - 体验工具并评价 | 趣味惩罚游戏</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B6B',
+                        secondary: '#4ECDC4',
+                        accent: '#FFD166',
+                        dark: '#292F36',
+                        light: '#F7FFF7'
+                    },
+                    fontFamily: {
+                        comic: ['"Comic Sans MS"', '"Bubblegum Sans"', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .bg-gradient-custom {
+                background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            }
+        }
+    </style>
+</head>
+<body class="bg-light font-comic text-dark min-h-screen">
+    <header class="bg-gradient-custom text-white py-6 shadow-lg">
+        <div class="container mx-auto px-4">
+            <a href="../index.html" class="text-white hover:text-accent transition-colors inline-block">
+                <span class="text-xl font-bold">← 返回主页</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="max-w-3xl mx-auto">
+            <div class="bg-white rounded-xl shadow-xl p-8 mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <span class="bg-primary/20 text-primary font-bold text-xl py-2 px-6 rounded-full">惩罚项目 #30</span>
+                    <span class="text-gray-500 text-sm">难度：★★☆☆☆</span>
+                </div>
+                
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-primary mb-6 text-center">体验工具并评价</h2>
+                
+                <div class="bg-accent/10 rounded-lg p-6 mb-6">
+                    <p class="text-[clamp(1.2rem,2vw,1.5rem)] text-dark font-medium text-center leading-relaxed">
+                        体验指定文字加密工具并给出真实评价，评价需包含优点和改进建议
+                    </p>
+                </div>
+                
+                <div class="bg-gray-100 rounded-lg p-6 text-center mb-8">
+                    <!-- 嵌入文字加密工具，已删除声色渐变背景，优化视觉整洁度 -->
+                    <div class="mx-auto max-h-[500px] w-full overflow-auto border border-gray-200 rounded-lg shadow-md bg-white p-2">
+                        <!DOCTYPE html>
+                        <html lang="zh-CN">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>文字加密工具</title>
+                            <style>
+                                * { 
+                                    margin: 0; 
+                                    padding: 0; 
+                                    box-sizing: border-box; 
+                                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+                                    -webkit-tap-highlight-color: transparent;
+                                    outline: none;
+                                } 
+                                body { 
+                                    background: #ffffff; /* 替换原渐变背景为纯白色，避免杂乱 */
+                                    min-height: 100vh; 
+                                    padding: 20px; 
+                                    transition: all 0.3s; 
+                                    position: relative;
+                                    overflow-x: hidden;
+                                    user-select: none;
+                                } 
+                                body.modal-open {
+                                    overflow: hidden;
+                                    touch-action: none; /* 禁止页面触摸滑动，避免弹窗穿透 */
+                                }
+                                .container { 
+                                    max-width: 800px; 
+                                    margin: 0 auto; 
+                                    background: rgba(255,255,255,0.98); 
+                                    padding: 30px; 
+                                    border-radius: 15px; 
+                                    box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+                                    user-select: auto;
+                                } 
+                                .version-btn {
+                                    text-align: center;
+                                    margin: 0 auto 25px;
+                                    width: fit-content;
+                                }
+                                #versionBtn {
+                                    padding: 8px 20px;
+                                    border: none;
+                                    border-radius: 20px;
+                                    background: #3A6073;
+                                    color: white;
+                                    cursor: pointer;
+                                    font-size: 14px;
+                                    font-weight: 600;
+                                    transition: all 0.3s;
+                                    user-select: none;
+                                }
+                                #versionBtn:hover {
+                                    background: #4B7F99;
+                                }
+                                /* 自定义右键菜单样式 */
+                                .custom-contextmenu {
+                                    position: fixed;
+                                    width: 120px;
+                                    background: white;
+                                    border-radius: 6px;
+                                    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                                    z-index: 999999;
+                                    display: none;
+                                    user-select: none;
+                                }
+                                .custom-contextmenu-item {
+                                    padding: 8px 10px;
+                                    font-size: 14px;
+                                    color: #333;
+                                    cursor: pointer;
+                                    transition: background 0.2s;
+                                }
+                                .custom-contextmenu-item:hover {
+                                    background: #f5f5f5;
+                                }
+                                /* 结果框局部遮罩 - 菜单启用时显示，长按/右键触发菜单 */
+                                .result-mask {
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    width: 100%;
+                                    height: 100%;
+                                    background: transparent;
+                                    z-index: 10;
+                                    display: none;
+                                    pointer-events: auto;
+                                }
+                                .result-mask.active {
+                                    display: block;
+                                }
+                                /* 弹窗样式修复：核心解决手机端滚动问题 */
+                                .modal-mask {
+                                    position: fixed;
+                                    top: 0;
+                                    left: 0;
+                                    width: 100%;
+                                    height: 100%;
+                                    background: rgba(0,0,0,0.6);
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    z-index: 1000;
+                                    opacity: 0;
+                                    pointer-events: none;
+                                    transition: opacity 0.3s;
+                                    padding: 20px; /* 手机端留边，避免弹窗贴边 */
+                                    overflow: hidden; /* 隐藏溢出，防止页面滚动 */
+                                }
+                                .modal-mask.show {
+                                    opacity: 1;
+                                    pointer-events: auto;
+                                }
+                                .modal-content {
+                                    width: 100%;
+                                    max-width: 500px;
+                                    background: white;
+                                    border-radius: 10px;
+                                    position: relative;
+                                    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+                                    user-select: auto;
+                                    max-height: 80vh; /* 限制弹窗高度，适配手机屏幕 */
+                                    display: flex;
+                                    flex-direction: column; /* 垂直布局，标题固定，内容滚动 */
+                                    overflow: hidden; /* 隐藏容器溢出，确保滚动层独立 */
+                                }
+                                .modal-title {
+                                    text-align: center;
+                                    font-size: 18px;
+                                    font-weight: 600;
+                                    color: #16222A;
+                                    padding: 20px 20px 15px;
+                                    border-bottom: 1px solid #eee; /* 分隔标题和内容，视觉更清晰 */
+                                    user-select: none;
+                                    flex-shrink: 0; /* 标题不收缩，固定在顶部 */
+                                }
+                                .modal-close {
+                                    position: absolute;
+                                    top: 15px;
+                                    right: 15px;
+                                    font-size: 20px;
+                                    cursor: pointer;
+                                    color: #666;
+                                    transition: color 0.2s;
+                                    line-height: 1;
+                                    user-select: none;
+                                    z-index: 10; /* 确保关闭按钮在最上层 */
+                                }
+                                .modal-close:hover {
+                                    color: #dc3545;
+                                }
+                                /* 独立滚动层：更新日志内容容器 */
+                                .version-scroll {
+                                    padding: 0 20px 20px;
+                                    flex: 1; /* 占满剩余高度 */
+                                    overflow-y: auto; /* 仅内容区域滚动，标题固定 */
+                                    -webkit-overflow-scrolling: touch; /* 开启手机端弹性滚动，提升体验 */
+                                }
+                                .version-list {
+                                    line-height: 1.8;
+                                    color: #333;
+                                    padding-left: 20px;
+                                    font-size: 15px;
+                                }
+                                h1 { 
+                                    text-align: center; 
+                                    color: #16222A; 
+                                    margin-bottom: 15px; 
+                                    font-weight: 700; 
+                                    user-select: none;
+                                } 
+                                .input-group { 
+                                    margin-bottom: 25px; 
+                                } 
+                                label { 
+                                    display: block; 
+                                    margin-bottom: 8px; 
+                                    color: #333; 
+                                    font-weight: 500; 
+                                    font-size: 16px; 
+                                    user-select: none;
+                                } 
+                                textarea { 
+                                    width: 100%; 
+                                    padding: 15px; 
+                                    border: 2px solid #ddd; 
+                                    border-radius: 8px; 
+                                    resize: none; 
+                                    font-size: 14px; 
+                                    line-height: 1.6; 
+                                    transition: border 0.3s; 
+                                    -webkit-tap-highlight-color: transparent;
+                                    user-select: text;
+                                }
+                                textarea:focus { 
+                                    outline: none; 
+                                    border-color: #3A6073; 
+                                } 
+                                .word-count { 
+                                    text-align: right; 
+                                    font-size: 14px; 
+                                    color: #666; 
+                                    margin-top: 5px; 
+                                    user-select: none;
+                                }
+                                .btn-group { 
+                                    display: flex; 
+                                    gap: 15px; 
+                                    margin-bottom: 25px; 
+                                    flex-wrap: wrap; 
+                                    user-select: none;
+                                } 
+                                button { 
+                                    flex: 1; 
+                                    padding: 12px; 
+                                    border: none; 
+                                    border-radius: 8px; 
+                                    font-size: 14px; 
+                                    font-weight: 600; 
+                                    cursor: pointer; 
+                                    transition: all 0.3s; 
+                                    min-width: 120px; 
+                                    position: relative;
+                                    overflow: hidden;
+                                    user-select: none;
+                                } 
+                                #encryptBtn { background: #16222A; color: white; } 
+                                #encryptBtn:hover { background: #203239; transform: translateY(-2px); } 
+                                #decryptBtn { background: #3A6073; color: white; } 
+                                #decryptBtn:hover { background: #4B7F99; transform: translateY(-2px); } 
+                                #copyBtn { background: #6D91A6; color: white; } 
+                                #copyBtn:hover { background: #8BA9B8; transform: translateY(-2px); } 
+                                #downloadBtn { background: #28a745; color: white; }
+                                #downloadBtn:hover { background: #218838; transform: translateY(-2px); } 
+                                #clearBtn { background: #dc3545; color: white; }
+                                #clearBtn:hover { background: #bb2d3b; transform: translateY(-2px); }
+                                #resetMenuBtn { background: #ffc107; color: #212529; }
+                                #resetMenuBtn:hover { background: #ffca2c; transform: translateY(-2px); }
+                                .result-container {
+                                    position: relative;
+                                    user-select: auto;
+                                }
+                                .result-box { 
+                                    border: 2px dashed #3A6073; 
+                                    padding: 15px; 
+                                    border-radius: 8px; 
+                                    background: #f8f9fa; 
+                                    min-height: 120px; 
+                                    word-break: break-all; 
+                                    font-size: 14px; 
+                                    color: #333; 
+                                    line-height: 1.8;
+                                    padding-top: 25px;
+                                    user-select: text;
+                                    position: relative;
+                                    z-index: 5;
+                                }
+                                .result-word-count {
+                                    position: absolute;
+                                    top: 5px;
+                                    right: 10px;
+                                    font-size: 12px;
+                                    color: #666;
+                                    display: none;
+                                    user-select: none;
+                                    z-index: 15;
+                                }
+                                .result-box .long-tip { color: #dc3545; font-weight: 500; }
+                                .tooltip { 
+                                    position: fixed; 
+                                    bottom: 30px; 
+                                    left: 50%; 
+                                    transform: translateX(-50%); 
+                                    background: #16222A; 
+                                    color: white; 
+                                    padding: 10px 20px; 
+                                    border-radius: 20px; 
+                                    font-size: 14px; 
+                                    opacity: 0; 
+                                    pointer-events: none; 
+                                    transition: opacity 0.3s; 
+                                    z-index: 100; 
+                                    user-select: none;
+                                } 
+                                .tooltip.show { opacity: 1; }
+                                .firework {
+                                    position: fixed; 
+                                    width: 6px;
+                                    height: 6px;
+                                    border-radius: 50%;
+                                    pointer-events: none;
+                                    z-index: 99999; 
+                                    animation: firework 0.7s cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards; 
+                                }
+                                @keyframes firework {
+                                    0% { 
+                                        opacity: 1; 
+                                        transform: scale(1); 
+                                    }
+                                    50% { 
+                                        opacity: 0.8;
+                                        transform: scale(1.2); 
+                                    }
+                                    100% { 
+                                        opacity: 0; 
+                                        transform: scale(0); 
+                                    }
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="container">
+                                <h1>文字加密工具</h1>
+                                <div class="version-btn">
+                                    <button id="versionBtn">查看更新公告</button>
+                                </div>
+                                <div class="input-group">
+                                    <label for="inputText">输入原文/密文：</label>
+                                    <textarea id="inputText" rows="6" placeholder="请输入文本"></textarea>
+                                    <div class="word-count">当前字符数：<span id="countNum">0</span></div>
+                                </div>
+                                <div class="btn-group">
+                                    <button id="encryptBtn">执行加密</button>
+                                    <button id="decryptBtn">执行解密</button>
+                                    <button id="copyBtn">复制结果</button>
+                                    <button id="downloadBtn">下载为TXT</button>
+                                    <button id="clearBtn">一键清空</button>
+                                    <button id="resetMenuBtn">重置右键菜单</button>
+                                </div>
+                                <div class="input-group">
+                                    <label for="resultText">处理结果：</label>
+                                    <div class="result-container">
+                                        <div class="result-word-count" id="resultCount">结果字符数：0</div>
+                                        <div id="resultText" class="result-box"></div>
+                                        <!-- 结果框局部遮罩 -->
+                                        <div class="result-mask" id="resultMask"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 更新日志弹窗：结构调整，新增独立滚动层 -->
+                            <div class="modal-mask" id="versionModal">
+                                <div class="modal-content">
+                                    <span class="modal-close" id="modalClose">&times;</span>
+                                    <h3 class="modal-title">版本更新日志</h3>
+                                    <!-- 独立滚动容器：包裹更新日志列表 -->
+                                    <div class="version-scroll">
+                                        <ul class="version-list">
+                                            <li>1.0 版本  初始版本</li>
+                                            <li>1.1 版本  解决了base64解码失败问题</li>
+                                            <li>1.2 版本  添加了 SHA-256 校验码防篡改</li>
+                                            <li>2.0 版本  取消了分隔符</li>
+                                            <li>2.1 版本  优化了长度计算逻辑</li>
+                                            <li>3.0 版本  添加了TXT下载功能</li>
+                                            <li>3.1 版本  优化了文字显示</li>
+                                            <li>3.2 版本  修复了已知bug</li>
+                                            <li>3.3 版本  优化了换行符显示</li>
+                                            <li>3.4 版本  优化了下载文件名</li>
+                                            <li>3.5 版本  优化了处理文件名</li>
+                                            <li>4.0 版本  添加了一键清空功能</li>
+                                            <li>4.1 版本  添加了结果有效性标记</li>
+                                            <li>5.0 版本  添加了字数统计功能</li>
+                                            <li>5.1 版本  修复了更新公告滑动的bug</li>
+                                            <li>5.2 版本  添加结果字符数统计功能</li>
+                                            <li>5.3 版本  修复了弹窗打开的已知问题</li>
+                                            <li>5.4 版本  新增了彩色烟花特效</li>
+                                            <li>5.5 版本  优化了彩色烟花特效</li>
+                                            <li>5.6 版本  继续优化了彩色烟花特效</li>
+                                            <li>5.7 版本  修复了滑动后彩色烟花特效错位的bug</li>
+                                            <li>5.8 版本  修复了电脑端烟花动画显示错误的bug</li>
+                                            <li>5.9 版本  修复手机端无法选中文本的问题，新增自定义右键复制菜单</li>
+                                            <li>5.10 版本  取消自定义右键菜单，恢复浏览器默认右键菜单</li>
+                                            <li>5.11 版本  新增带复制/下载的自定义右键菜单，复制失败自动禁用菜单</li>
+                                            <li>5.12 版本  右键菜单禁用状态写入浏览器缓存，页面刷新后保留设置</li>
+                                            <li>5.13 版本  新增重置右键菜单按钮，支持手动清除缓存恢复功能</li>
+                                            <li>5.14 版本  自定义右键菜单生效时禁用文字选择，避免交互冲突</li>
+                                            <li>5.15 版本  修复输入框无法选中输入的问题，仅在菜单弹出期间临时禁用选择</li>
+                                            <li>5.16 版本  强化禁用逻辑，通过 !important 和 pointer-events 确保文本选择被禁用</li>
+                                            <li>5.17 版本  采用透明遮罩方案，彻底拦截鼠标交互，杜绝文本选择</li>
+                                            <li>5.18 版本  自定义菜单未禁用时，遮罩永久激活，持续阻断文本选择</li>
+                                            <li>5.19 版本  遮罩改为仅覆盖结果框，保留输入框正常输入交互</li>
+                                            <li>5.20 版本  右键菜单绑定遮罩，长按/右键触发菜单，遮罩消失则菜单失效</li>
+                                            <li>5.21 版本  修复手机端更新公告弹窗无法上滑问题，优化弹窗滚动和触摸交互</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 自定义右键菜单 -->
+                            <div class="custom-contextmenu" id="customContextmenu">
+                                <div class="custom-contextmenu-item" id="menuCopy">复制</div>
+                                <div class="custom-contextmenu-item" id="menuDownload">下载</div>
+                            </div>
+                            <div class="tooltip" id="tooltip">复制成功！</div>
+                            <script>
+                                class PerfectEncryptor {
+                                    static generateSalt() {
+                                        const base64安全字符 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+                                        return Array.from({length: 12}, () => base64安全字符[Math.floor(Math.random() * base64安全字符.length)]).join('');
+                                    }
+                                    static 异或加密(str, 密钥) {
+                                        let 结果 = '';
+                                        for (let i = 0; i < str.length; i++) {
+                                            const 密钥索引 = i % 密钥.length;
+                                            const 字符编码 = str.charCodeAt(i);
+                                            const 密钥编码 = 密钥.charCodeAt(密钥索引);
+                                            const 异或编码 = (字符编码 ^ 密钥编码) & 0xFFFF;
+                                            结果 += String.fromCharCode(异或编码);
+                                        }
+                                        return 结果;
+                                    }
+                                    static 创建字符映射表(盐值) {
+                                        const 盐值哈希 = 盐值.split('').reduce((累加值, 字符) => {
+                                            return (累加值 * 41 + 字符.charCodeAt(0)) % 2147483647;
+                                        }, 12345);
+                                        const 正向映射表 = new Map();
+                                        const 反向映射表 = new Map();
+                                        return {
+                                            加密映射: (字符) => {
+                                                const 字符编码 = 字符.charCodeAt(0);
+                                                if (正向映射表.has(字符编码)) {
+                                                    return String.fromCharCode(正向映射表.get(字符编码));
+                                                }
+                                                const 映射编码 = (字符编码 + 盐值哈希) % 65536;
+                                                正向映射表.set(字符编码, 映射编码);
+                                                反向映射表.set(映射编码, 字符编码);
+                                                return String.fromCharCode(映射编码);
+                                            },
+                                            解密映射: (字符) => {
+                                                const 字符编码 = 字符.charCodeAt(0);
+                                                if (反向映射表.has(字符编码)) {
+                                                    return String.fromCharCode(反向映射表.get(字符编码));
+                                                }
+                                                const 原始编码 = (字符编码 - 盐值哈希 + 65536) % 65536;
+                                                反向映射表.set(字符编码, 原始编码);
+                                                正向映射表.set(原始编码, 字符编码);
+                                                return String.fromCharCode(原始编码);
+                                            }
+                                        };
+                                    }
+                                    static UTF8转Base64(str) {
+                                        try {
+                                            return btoa(new TextEncoder().encode(str).reduce((累加值, 字节) => 累加值 + String.fromCharCode(字节), ''));
+                                        } catch (e) {
+                                            throw new Error('字符编码失败（UTF-8→Base64）');
+                                        }
+                                    }
+                                    static Base64转UTF8(str) {
+                                        try {
+                                            const 字节数组 = new Uint8Array(atob(str).split('').map(字符 => 字符.charCodeAt(0)));
+                                            return new TextDecoder('utf-8').decode(字节数组);
+                                        } catch (e) {
+                                            throw new Error('Base64解码失败（Base64→UTF-8）');
+                                        }
+                                    }
+                                    static async 生成SHA256哈希(str) {
+                                        const 编码器 = new TextEncoder();
+                                        const 数据 = 编码器.encode(str);
+                                        const 摘要 = await crypto.subtle.digest('SHA-256', 数据);
+                                        return Array.from(new Uint8Array(摘要)).map(字节 => 字节.toString(16).padStart(2, '0')).join('').slice(0, 32);
+                                    }
+                                    static async 加密(文本) {
+                                        if (!文本.trim()) {
+                                            return { 有效: false, 内容: '?? 请输入需要加密的文字！' };
+                                        }
+                                        try {
+                                            const 盐值 = this.generateSalt();
+                                            const 字符映射表 = this.创建字符映射表(盐值);
+                                            const 异或后文本 = this.异或加密(文本, 盐值);
+                                            const 映射后文本 = 异或后文本.split('').map(字符 => 字符映射表.加密映射(字符)).join('');
+                                            const Base64文本 = this.UTF8转Base64(映射后文本);
+                                            const 校验码 = await this.生成SHA256哈希(盐值 + Base64文本);
+                                            const 最终密文 = 盐值 + Base64文本 + 校验码;
+                                            return { 有效: true, 内容: 最终密文 };
+                                        } catch (e) {
+                                            return { 有效: false, 内容: `? 加密失败：${e.message}` };
+                                        }
+                                    }
+                                    static async 解密(密文) {
+                                        if (!密文.trim()) {
+                                            return { 有效: false, 内容: '?? 请输入需要解密的密文！' };
+                                        }
+                                        if (密文.length < 48) {
+                                            return { 有效: false, 内容: '? 密文格式错误：长度不足' };
+                                        }
+                                        const 盐值 = 密文.slice(0, 12);
+                                        const 校验码 = 密文.slice(-32);
+                                        const Base64文本 = 密文.slice(12, -32);
+                                        if (Base64文本.length % 4 !== 0) {
+                                            return { 有效: false, 内容: '? 密文无效：不是标准Base64格式' };
+                                        }
+                                        try {
+                                            const 实际校验码 = await this.生成SHA256哈希(盐值 + Base64文本);
+                                            if (实际校验码 !== 校验码) {
+                                                return { 有效: false, 内容: '? 密文已被篡改！验证失败' };
+                                            }
+                                            const 字符映射表 = this.创建字符映射表(盐值);
+                                            const UTF8文本 = this.Base64转UTF8(Base64文本);
+                                            const 逆映射后文本 = UTF8文本.split('').map(字符 => 字符映射表.解密映射(字符)).join('');
+                                            const 原文 = this.异或加密(逆映射后文本, 盐值);
+                                            return { 有效: true, 内容: 原文 };
+                                        } catch (e) {
+                                            return { 有效: false, 内容: `? 解密失败：${e.message}` };
+                                        }
+                                    }
+                                }
+                                const 输入文本框 = document.getElementById('inputText');
+                                const 结果显示框 = document.getElementById('resultText');
+                                const 加密按钮 = document.getElementById('encryptBtn');
+                                const 解密按钮 = document.getElementById('decryptBtn');
+                                const 复制按钮 = document.getElementById('copyBtn');
+                                const 下载按钮 = document.getElementById('downloadBtn');
+                                const 清空按钮 = document.getElementById('clearBtn');
+                                const 重置菜单按钮 = document.getElementById('resetMenuBtn');
+                                const 提示框 = document.getElementById('tooltip');
+                                const 字数统计显示 = document.getElementById('countNum');
+                                const 版本按钮 = document.getElementById('versionBtn');
+                                const 版本弹窗 = document.getElementById('versionModal');
+                                const 弹窗关闭按钮 = document.getElementById('modalClose');
+                                const 结果字数显示 = document.getElementById('resultCount');
+                                const 自定义右键菜单 = document.getElementById('customContextmenu');
+                                const 菜单复制项 = document.getElementById('menuCopy');
+                                const 菜单下载项 = document.getElementById('menuDownload');
+                                const 结果遮罩 = document.getElementById('resultMask');
+                                let 完整结果 = '';
+                                let 操作类型 = '';
+                                let 结果有效 = false;
+                                const 最大显示长度 = 1000;
+                                let 滚动位置 = 0;
+                                // 长按相关变量
+                                let 长按计时器 = null;
+                                const 长按触发时间 = 500; // 手机端长按500ms触发菜单
+                                let 菜单触发坐标 = {x:0, y:0};
+                                // 从localStorage读取禁用状态，默认未禁用
+                                let 右键菜单禁用 = localStorage.getItem('customMenuDisabled') === 'true';
+                                // ========== 遮罩控制核心逻辑 ==========
+                                function 更新遮罩状态() {
+                                    if (右键菜单禁用) {
+                                        结果遮罩.classList.remove('active');
+                                    } else {
+                                        结果遮罩.classList.add('active');
+                                    }
+                                }
+                                // 页面初始化时立即更新遮罩状态
+                                更新遮罩状态();
+                                // ========== 统一的菜单显示逻辑 ==========
+                                function 显示自定义菜单(clientX, clientY) {
+                                    if (!完整结果.trim()) return;
+                                    // 记录触发坐标
+                                    菜单触发坐标.x = clientX;
+                                    菜单触发坐标.y = clientY;
+                                    
+                                    const 视口宽度 = document.documentElement.clientWidth;
+                                    const 视口高度 = document.documentElement.clientHeight;
+                                    let 菜单X = 菜单触发坐标.x;
+                                    let 菜单Y = 菜单触发坐标.y;
+                                    
+                                    // 防止菜单超出视口
+                                    if (菜单X + 自定义右键菜单.offsetWidth > 视口宽度) {
+                                        菜单X = 菜单触发坐标.x - 自定义右键菜单.offsetWidth;
+                                    }
+                                    if (菜单Y + 自定义右键菜单.offsetHeight > 视口高度) {
+                                        菜单Y = 菜单触发坐标.y - 自定义右键菜单.offsetHeight;
+                                    }
+                                    
+                                    自定义右键菜单.style.left = `${菜单X}px`;
+                                    自定义右键菜单.style.top = `${菜单Y}px`;
+                                    自定义右键菜单.style.display = 'block';
+                                }
+                                // ========== 手机端长按触发逻辑 ==========
+                                // 鼠标按下/触摸开始（开始长按计时）
+                                结果遮罩.addEventListener('mousedown', (e) => {
+                                    if (右键菜单禁用) return;
+                                    // 启动计时器
+                                    长按计时器 = setTimeout(() => {
+                                        显示自定义菜单(e.clientX, e.clientY);
+                                    }, 长按触发时间);
+                                });
+                                // 触摸事件支持（纯手机端）
+                                结果遮罩.addEventListener('touchstart', (e) => {
+                                    if (右键菜单禁用) return;
+                                    e.preventDefault(); // 阻止默认触摸行为
+                                    const touch = e.touches[0];
+                                    // 启动计时器
+                                    长按计时器 = setTimeout(() => {
+                                        显示自定义菜单(touch.clientX, touch.clientY);
+                                    }, 长按触发时间);
+                                });
+                                // 鼠标松开/离开/触摸结束（取消长按计时）
+                                function 取消长按计时() {
+                                    clearTimeout(长按计时器);
+                                    长按计时器 = null;
+                                }
+                                结果遮罩.addEventListener('mouseup', 取消长按计时);
+                                结果遮罩.addEventListener('mouseleave', 取消长按计时);
+                                结果遮罩.addEventListener('touchend', 取消长按计时);
+                                结果遮罩.addEventListener('touchcancel', 取消长按计时);
+                                // ========== 电脑端右键触发逻辑 ==========
+                                结果遮罩.addEventListener('contextmenu', (e) => {
+                                    if (右键菜单禁用) return;
+                                    e.preventDefault(); // 阻止浏览器默认右键菜单
+                                    显示自定义菜单(e.clientX, e.clientY);
+                                });
+                                // ========== 烟花特效核心代码 ==========
+                                const 颜色列表 = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+                                function 创建烟花(x, y) {
+                                    for (let i = 0; i < 8; i++) { 
+                                        const 粒子 = document.createElement('div');
+                                        粒子.className = 'firework';
+                                        粒子.style.backgroundColor = 颜色列表[Math.floor(Math.random() * 颜色列表.length)];
+                                        const 偏移X = (Math.random() - 0.5) * 25;
+                                        const 偏移Y = (Math.random() - 0.5) * 25;
+                                        粒子.style.left = `${x + 偏移X}px`;
+                                        粒子.style.top = `${y + 偏移Y}px`;
+                                        粒子.style.animationDuration = '0.7s'; 
+                                        document.body.appendChild(粒子);
+                                        setTimeout(() => {
+                                            粒子.remove();
+                                        }, 700); 
+                                    }
+                                }
+                                // 点击事件：过滤选中文本时的点击，避免干扰
+                                document.addEventListener('click', (e) => {
+                                    if (e.button !== 0) return;
+                                    const 选中的文本 = window.getSelection().toString();
+                                    if (选中的文本) return;
+                                    const 点击X = e.clientX;
+                                    const 点击Y = e.clientY;
+                                    创建烟花(点击X, 点击Y);
+                                });
+                                // ========== 菜单功能逻辑 ==========
+                                // 复制菜单项点击事件
+                                菜单复制项.addEventListener('click', async () => {
+                                    if (!完整结果.trim()) {
+                                        显示提示('无内容可复制！');
+                                        自定义右键菜单.style.display = 'none';
+                                        return;
+                                    }
+                                    try {
+                                        await navigator.clipboard.writeText(完整结果);
+                                        显示提示('复制成功！');
+                                    } catch (err) {
+                                        显示提示('复制失败，已切换为默认右键菜单！');
+                                        右键菜单禁用 = true;
+                                        localStorage.setItem('customMenuDisabled', 'true');
+                                        更新遮罩状态();
+                                    }
+                                    自定义右键菜单.style.display = 'none';
+                                });
+                                // 下载菜单项点击事件
+                                菜单下载项.addEventListener('click', () => {
+                                    if (!完整结果.trim()) {
+                                        显示提示('无内容可下载！');
+                                        自定义右键菜单.style.display = 'none';
+                                        return;
+                                    }
+                                    let 文件名 = '处理结果.txt';
+                                    if (结果有效) {
+                                        文件名 = 操作类型 === '加密' ? '加密结果.txt' : '解密结果.txt';
+                                    }
+                                    const 二进制对象 = new Blob([完整结果], { type: 'text/plain; charset=utf-8' });
+                                    const 下载链接 = document.createElement('a');
+                                    下载链接.download = 文件名;
+                                    下载链接.href = URL.createObjectURL(二进制对象);
+                                    下载链接.click();
+                                    URL.revokeObjectURL(下载链接.href);
+                                    显示提示('下载成功！');
+                                    自定义右键菜单.style.display = 'none';
+                                });
+                                // 点击其他区域关闭菜单
+                                document.addEventListener('mousedown', (e) => {
+                                    if (自定义右键菜单.style.display === 'block' && !自定义右键菜单.contains(e.target)) {
+                                        自定义右键菜单.style.display = 'none';
+                                    }
+                                });
+                                // 触摸其他区域关闭菜单（手机端）
+                                document.addEventListener('touchstart', (e) => {
+                                    if (自定义右键菜单.style.display === 'block' && !自定义右键菜单.contains(e.target)) {
+                                        自定义右键菜单.style.display = 'none';
+                                    }
+                                });
+                                // ========== 重置右键菜单按钮逻辑 ==========
+                                重置菜单按钮.addEventListener('click', () => {
+                                    localStorage.removeItem('customMenuDisabled');
+                                    右键菜单禁用 = false;
+                                    更新遮罩状态();
+                                    显示提示('右键菜单已重置，长按/右键结果框触发菜单！');
+                                });
+                                // ========== 弹窗显示/隐藏逻辑（微调，适配滚动修复） ==========
+                                版本按钮.addEventListener('click', () => {
+                                    滚动位置 = window.scrollY;
+                                    版本弹窗.classList.add('show');
+                                    document.body.classList.add('modal-open');
+                                });
+                                function 关闭弹窗(){
+                                    版本弹窗.classList.remove('show');
+                                    document.body.classList.remove('modal-open');
+                                    window.scrollTo(0, 滚动位置);
+                                }
+                                弹窗关闭按钮.addEventListener('click', 关闭弹窗);
+                                versionModal.addEventListener('click', (e) => {
+                                    if (e.target === versionModal) 关闭弹窗();
+                                });
+                                document.addEventListener('keydown',(e)=>{
+                                    if (e.key === 'Escape' && 版本弹窗.classList.contains('show')) 关闭弹窗();
+                                })
+                                // 阻止弹窗内容滚动时触发底层页面滚动
+                                document.querySelector('.version-scroll').addEventListener('touchmove', (e) => {
+                                    e.stopPropagation();
+                                });
+                                // ========== 输入字符数统计 ==========
+                                function 更新字数统计() {
+                                    const 字符数 = 输入文本框.value.length;
+                                    字数统计显示.textContent = 字符数;
+                                }
+                                输入文本框.addEventListener('input', 更新字数统计);
+                                // ========== 结果字符数统计 ==========
+                                function 更新结果字数统计() {
+                                    if (结果有效) {
+                                        const 字符数 = 完整结果.length;
+                                        结果字数显示.textContent = `结果字符数：${字符数}`;
+                                        结果字数显示.style.display = 'block';
+                                    } else {
+                                        结果字数显示.style.display = 'none';
+                                    }
+                                }
+                                // ========== 渲染结果 ==========
+                                function 渲染结果(结果内容, 类型, 有效状态) {
+                                    完整结果 = 结果内容;
+                                    操作类型 = 类型;
+                                    结果有效 = 有效状态;
+                                    if (结果内容.length > 最大显示长度) {
+                                        结果显示框.innerHTML = `<span class="long-tip">?? 数据过长无法显示（超过${最大显示长度}字），请下载后查看！</span>`;
+                                    } else {
+                                        结果显示框.innerHTML = 结果内容.replace(/\n/g, '<br>');
+                                    }
+                                    更新结果字数统计();
+                                }
+                                // ========== 按钮点击逻辑 ==========
+                                加密按钮.addEventListener('click', async () => {
+                                    const 输入文本 = 输入文本框.value.trim();
+                                    结果显示框.textContent = '加密中...';
+                                    const 加密结果 = await PerfectEncryptor.加密(输入文本);
+                                    渲染结果(加密结果.内容, '加密', 加密结果.有效);
+                                });
+                                解密按钮.addEventListener('click', async () => {
+                                    const 输入文本 = 输入文本框.value.trim();
+                                    结果显示框.textContent = '解密中...';
+                                    const 解密结果 = await PerfectEncryptor.解密(输入文本);
+                                    渲染结果(解密结果.内容, '解密', 解密结果.有效);
+                                });
+                                复制按钮.addEventListener('click', async () => {
+                                    if (!完整结果.trim()) {
+                                        显示提示('无内容可复制！');
+                                        return;
+                                    }
+                                    try {
+                                        await navigator.clipboard.writeText(完整结果);
+                                        显示提示('复制成功！');
+                                    } catch (err) {
+                                        显示提示('复制失败，请手动复制！');
+                                    }
+                                });
+                                下载按钮.addEventListener('click', () => {
+                                    if (!完整结果.trim()) {
+                                        显示提示('无内容可下载！');
+                                        return;
+                                    }
+                                    let 文件名 = '处理结果.txt';
+                                    if (结果有效) {
+                                        文件名 = 操作类型 === '加密' ? '加密结果.txt' : '解密结果.txt';
+                                    }
+                                    const 二进制对象 = new Blob([完整结果], { type: 'text/plain; charset=utf-8' });
+                                    const 下载链接 = document.createElement('a');
+                                    下载链接.download = 文件名;
+                                    下载链接.href = URL.createObjectURL(二进制对象);
+                                    下载链接.click();
+                                    URL.revokeObjectURL(下载链接.href);
+                                    显示提示('下载成功！');
+                                });
+                                清空按钮.addEventListener('click', () => {
+                                    输入文本框.value = '';
+                                    结果显示框.innerHTML = '';
+                                    完整结果 = '';
+                                    操作类型 = '';
+                                    结果有效 = false;
+                                    更新字数统计();
+                                    更新结果字数统计();
+                                    显示提示('已清空内容！');
+                                });
+                                // ========== 提示框逻辑 ==========
+                                function 显示提示(消息) {
+                                    提示框.textContent = 消息;
+                                    提示框.classList.add('show');
+                                    setTimeout(() => {
+                                        提示框.classList.remove('show');
+                                    }, 1500);
+                                }
+                                // ========== 初始化 ==========
+                                更新字数统计();
+                                更新结果字数统计();
+                            </script>
+                        </body>
+                        </html>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-primary/5 rounded-lg p-4">
+                        <h3 class="font-bold text-primary mb-2">执行要求</h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>完整体验文字加密工具的核心功能（加密、解密、复制、下载）</li>
+                            <li>现场口头给出评价，需包含<strong>至少1个优点</strong>和<strong>1个改进建议</strong></li>
+                            <li>评价真实客观，基于实际操作体验，不夸大、不敷衍</li>
+                            <li>表达清晰有条理，吐字准确，让现场人员听清评价内容</li>
+                        </ul>
+                    </div>
+                    <div class="bg-secondary/5 rounded-lg p-4">
+                        <h3 class="font-bold text-secondary mb-2">温馨提示</h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>体验时可输入任意文本测试加密功能，再用生成的密文测试解密</li>
+                            <li>优点可从功能完整性、操作便捷性、交互体验等角度出发</li>
+                            <li>改进建议需具体可行，比如功能补充、界面优化等方向</li>
+                            <li>评价时长控制在1分钟内，简洁明了突出重点即可</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="../index.html" class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-lg transition-colors text-lg">
+                        返回主页
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white py-4 mt-8">
+        <div class="container mx-auto px-4 text-center text-sm">
+            <p>趣味惩罚游戏 &copy; 2024</p>
+        </div>
+    </footer>
+</body>
+</html>

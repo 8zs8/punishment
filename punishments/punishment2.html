@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>惩罚项目2 - 表情动作模仿秀 | 趣味惩罚游戏</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B6B',
+                        secondary: '#4ECDC4',
+                        accent: '#FFD166',
+                        dark: '#292F36',
+                        light: '#F7FFF7'
+                    },
+                    fontFamily: {
+                        comic: ['"Comic Sans MS"', '"Bubblegum Sans"', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .bg-gradient-custom {
+                background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            }
+        }
+    </style>
+</head>
+<body class="bg-light font-comic text-dark min-h-screen">
+    <header class="bg-gradient-custom text-white py-6 shadow-lg">
+        <div class="container mx-auto px-4">
+            <a href="../index.html" class="text-white hover:text-accent transition-colors inline-block">
+                <span class="text-xl font-bold">← 返回主页</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="max-w-3xl mx-auto">
+            <div class="bg-white rounded-xl shadow-xl p-8 mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <span class="bg-primary/20 text-primary font-bold text-xl py-2 px-6 rounded-full">惩罚项目 #2</span>
+                    <span class="text-gray-500 text-sm">难度：★★★☆☆</span>
+                </div>
+                
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-primary mb-6 text-center">表情动作模仿秀</h2>
+                
+                <div class="bg-accent/10 rounded-lg p-6 mb-6">
+                    <p class="text-[clamp(1.2rem,2vw,1.5rem)] text-dark font-medium text-center leading-relaxed">
+                        模仿指定4个表情以及动作，可自由发挥
+                    </p>
+                </div>
+                
+                <div class="bg-gray-100 rounded-lg p-6 text-center mb-8">
+                    <img src="../images/20260129163910.png" alt="表情动作参考" class="mx-auto max-h-64 object-contain rounded-lg shadow-md">
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-primary/5 rounded-lg p-4">
+                        <h3 class="font-bold text-primary mb-2">执行要求</h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>准确模仿4个指定表情，神态到位</li>
+                            <li>动作可自由发挥，增加创意亮点</li>
+                            <li>每个表情动作持续5秒以上</li>
+                            <li>全程保持夸张搞笑的风格</li>
+                        </ul>
+                    </div>
+                    <div class="bg-secondary/5 rounded-lg p-4">
+                        <h3 class="font-bold text-secondary mb-2">温馨提示</h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>表情不要过于僵硬，自然生动最佳</li>
+                            <li>可配合肢体动作增强效果</li>
+                            <li>无需完全复刻，突出个人特色即可</li>
+                            <li>注意面部肌肉放松，避免抽筋</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="../index.html" class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-lg transition-colors text-lg">
+                        返回主页
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white py-4 mt-8">
+        <div class="container mx-auto px-4 text-center text-sm">
+            <p>趣味惩罚游戏 &copy; 2024</p>
+        </div>
+    </footer>
+</body>
+</html>
